@@ -106,7 +106,7 @@ public class UserRating {
 			for (j = 0; j < 10; j++)
 			{
 				if (responses[i][j] > 0)
-					total += (j + 1);
+					total += (responses[i][j] * (j + 1));
 			}
 			
 			if (total > maxTotal)
