@@ -11,22 +11,35 @@ public class Instruction {
         return (int)Math.pow(10.0, value);
     }
 
-    // TODO: Generate the problem type given an integer value (1-5), implement in generateQuestion()
+    // Takes in a value denoting the problem type, and the numbers to operate on, and generates a problem based on
+    // that type (addition, subtraction, etc.) and returns the correct answer to it.
     private static double determineProblemType(int value, int first, int second)
     {
         SecureRandom rand = new SecureRandom();
         int mixed;
 
-        // Returns the expected answer to the problem depending on the question type.
+        // Prints the problem and returns the expected answer to the problem depending on the question type.
         if (value == 1)
+        {
+            System.out.printf("What is %d plus %d?\n", first, second);
             return (double)first + second;
+        }
         else if (value == 2)
+        {
+            System.out.printf("What is %d minus %d?\n", first, second);
             return (double)first - second;
-        else if (value == 2)
+        }
+        else if (value == 3)
+        {
+            System.out.printf("What is %d times %d?\n", first, second);
             return (double)first * second;
-        else if (value == 2)
+        }
+        else if (value == 4)
+        {
+            System.out.printf("What is %d divided by %d? (Answer up to 3 decimal places)\n", first, second);
             return (double)first / second;
-        // If the user asked for mied type, generate a random integer between 1-4 and call this method with that number.
+        }
+        // If the user asked for mixed type, generate a random integer between 1-4 and call this method with that number.
         else
         {
             mixed = rand.nextInt(4) + 1;
@@ -35,8 +48,7 @@ public class Instruction {
     }
 
     // Takes in a difficulty level, generates a randomized math question, prints it out, and returns its expected answer.
-    private static double generateQuestion(int difficulty)
-    {
+    private static double generateQuestion(int difficulty, int problemType){
         int firstNumber, secondNumber;
         double correctAnswer = 0.0;
         int factor = determineDifficulty(difficulty);
@@ -46,9 +58,8 @@ public class Instruction {
         firstNumber = rand.nextInt(factor - 1) + 1;
         secondNumber = rand.nextInt(factor - 1) + 1;
 
-        System.out.printf("What is %d times %d?\n", firstNumber, secondNumber);
-
-        correctAnswer = firstNumber * secondNumber;
+        // Generates the problem type, along with the correct answer to that problem
+        correctAnswer = determineProblemType(problemType, firstNumber, secondNumber);
 
         return correctAnswer;
     }
@@ -127,10 +138,8 @@ public class Instruction {
 
     public static void main(String[] args)
     {
-        // TODO: Problem options (+, -, *, /, mixed)
-
         Scanner scan = new Scanner(System.in);
-        int i, difficulty; //, questionType;
+        int i, difficulty, questionType;
         double answer, expected;
         double numCorrect;
         char newSession = 'y';
@@ -149,10 +158,10 @@ public class Instruction {
                 difficulty = scan.nextInt();
             }
 
-            //System.out.println("Enter a question type (1 = Addition, 2 = Subtraction, 3 = Multiplication, 4 = Division, 5 = Mixed):");
-            //questionType = scan.nextInt();
+            System.out.println("Enter a question type (1 = Addition, 2 = Subtraction, 3 = Multiplication, 4 = Division, 5 = Mixed):");
+            questionType = scan.nextInt();
 
-            expected = generateQuestion(difficulty);
+            expected = generateQuestion(difficulty, questionType);
 
             answer = scan.nextDouble();
 
@@ -160,7 +169,7 @@ public class Instruction {
             // otherwise, continue to prompt for the same question.
             for (i = 0; i < 9; i++)
             {
-                if (Math.abs(answer - expected) <= 0.0001)
+                if (Math.abs(answer - expected) <= 0.001)
                 {
                     numCorrect++;
                     System.out.println(generateResponse(1));
@@ -170,10 +179,12 @@ public class Instruction {
                     System.out.println(generateResponse(2));
                 }
                 System.out.println("");
-                expected = generateQuestion(difficulty);
+                expected = generateQuestion(difficulty, questionType);
                 answer = scan.nextDouble();
             }
 
+            // Prints the final lines of the session: the number of correct and incorrect answers, and asks
+            // the user if they would like too start a new session.
             System.out.println("");
             System.out.printf("Number of correct responses: %d\n", (int)numCorrect);
             System.out.printf("Number of incorrect responses: %d\n", (int)(10 - numCorrect));
