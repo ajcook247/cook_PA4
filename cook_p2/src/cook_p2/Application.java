@@ -9,7 +9,7 @@ class Application {
         for (i = 1; i <= 12; i++)
         {
             System.out.print("Month #" + i + ": ");
-            saver.calculateMonthlyInterest();
+            saver.newMonthlyInterest();
         }
         System.out.println("");
     }
@@ -31,7 +31,7 @@ class Application {
         saver2.modifyInterestRate(0.05);
 
         System.out.println("Interest rate modified to 5%");
-        saver1.calculateMonthlyInterest();
-        saver2.calculateMonthlyInterest();
+        saver1.newMonthlyInterest();
+        saver2.newMonthlyInterest();
     }
 }

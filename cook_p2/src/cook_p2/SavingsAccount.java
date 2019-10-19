@@ -20,7 +20,7 @@ public class SavingsAccount {
 
     // Calculates the monthly rate based on the given formula, adds it to savingsBalance, and prints the
     // current balance.
-    public void calculateMonthlyInterest()
+    public void newMonthlyInterest()
     {
         double monthlyRate = (savingsBalance * annualInterestRate) / 12.0;
         savingsBalance += monthlyRate;
