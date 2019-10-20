@@ -162,14 +162,19 @@ public class Instruction {
             System.out.println("Enter a question type (1 = Addition, 2 = Subtraction, 3 = Multiplication, 4 = Division, 5 = Mixed):");
             questionType = scan.nextInt();
 
-            expected = generateQuestion(difficulty, questionType);
-
-            answer = scan.nextDouble();
+            while (!(questionType >= 1 && questionType <= 5))
+            {
+                System.out.println("Incorrect input. Enter a different problem type:");
+                questionType = scan.nextInt();
+            }
 
             // Allows the user 10 opportunities to answer questions. If correct, generate a new question;
             // otherwise, continue to prompt for the same question.
-            for (i = 0; i < 9; i++)
+            for (i = 0; i < 10; i++)
             {
+                expected = generateQuestion(difficulty, questionType);
+                answer = scan.nextDouble();
+
                 if (Math.abs(answer - expected) <= 0.001)
                 {
                     numCorrect++;
@@ -180,8 +185,6 @@ public class Instruction {
                     System.out.println(generateResponse(2));
                 }
                 System.out.println("");
-                expected = generateQuestion(difficulty, questionType);
-                answer = scan.nextDouble();
             }
 
             // Prints the final lines of the session: the number of correct and incorrect answers, and asks
