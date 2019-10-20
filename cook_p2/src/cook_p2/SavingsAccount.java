@@ -22,8 +22,7 @@ public class SavingsAccount {
     // current balance.
     public void newMonthlyInterest()
     {
-        double monthlyRate = (savingsBalance * annualInterestRate) / 12.0;
-        savingsBalance += monthlyRate;
+        savingsBalance += ((savingsBalance * annualInterestRate) / 12.0);
         System.out.printf("$%.2f\n", savingsBalance);
     }
 
