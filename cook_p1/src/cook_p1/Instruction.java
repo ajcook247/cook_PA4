@@ -5,10 +5,11 @@ import java.security.SecureRandom;
 
 public class Instruction {
 
-    // Takes in an integer value and returns the bounds representing the difficulty level.
+    // Takes in an integer value and returns the bounds representing the difficulty level, where 1 = ones digits,
+    // 2 = tens digits, and so on.
     private static int determineDifficulty(int value)
     {
-        return (int)Math.pow(10.0, value);
+        return (int)Math.pow(10.0, value - 1);
     }
 
     // Takes in a value denoting the problem type, and the numbers to operate on, and generates a problem based on
@@ -55,8 +56,8 @@ public class Instruction {
 
         SecureRandom rand = new SecureRandom();
 
-        firstNumber = rand.nextInt(factor - 1) + 1;
-        secondNumber = rand.nextInt(factor - 1) + 1;
+        firstNumber = rand.nextInt(9 * factor) + factor;
+        secondNumber = rand.nextInt(9 * factor) + factor;
 
         // Generates the problem type, along with the correct answer to that problem
         correctAnswer = determineProblemType(problemType, firstNumber, secondNumber);
