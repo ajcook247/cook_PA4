@@ -6,59 +6,73 @@ import java.util.Scanner;
 
 public class DuplicateCounter {
 
-	private static HashMap<String, Integer> wordCounter = new HashMap<String, Integer>();
+	private HashMap<String, Integer> wordCounter = new HashMap<String, Integer>();
 	
 	// Takes in a string representing a input file path, reads in text from that file, and adds each word as a key
 	// in a map called wordCounter, with each value representing the number of times that key has occurred in 
 	// the input file.
-	public static void count(String dataFile) throws IOException
+	public void count(String dataFile)
 	{
-		FileInputStream fis = null;
-		Scanner inScan = null;
-		String currentWord;
-		
-		fis = new FileInputStream(dataFile);
-		inScan = new Scanner(fis);
-
-		// While there is text remaining, scan in each word from dataFile. If the word is not in the map, add it
-		// with value 1; otherwise, do not add it, but increment its value.
-		while (inScan.hasNext())
+		try
 		{
-			currentWord = inScan.next();
+			FileInputStream fis = null;
+			Scanner inScan = null;
+			String currentWord;
 			
-			if (!wordCounter.containsKey(currentWord))
+			fis = new FileInputStream(dataFile);
+			inScan = new Scanner(fis);
+	
+			// While there is text remaining, scan in each word from dataFile. If the word is not in the map, add it
+			// with value 1; otherwise, do not add it, but increment its value.
+			while (inScan.hasNext())
 			{
-				wordCounter.put(currentWord, 1);
+				currentWord = inScan.next();
+				
+				if (!wordCounter.containsKey(currentWord))
+				{
+					wordCounter.put(currentWord, 1);
+				}
+				else
+				{
+					wordCounter.put(currentWord, wordCounter.get(currentWord) + 1);
+				}
 			}
-			else
-			{
-				wordCounter.put(currentWord, wordCounter.get(currentWord) + 1);
-			}
+			
+			// Close the scanners and input stream
+			inScan.close();
+			fis.close();
 		}
-		
-		// Close the scanners and input stream
-		inScan.close();
-		fis.close();
+		catch (IOException ex)
+		{
+			ex.printStackTrace();
+		}
 		
 	}
 
 	// Takes in a string representing a output file path, and prints each value from map wordCounter to that file.
-	public static void write(String outputFile) throws IOException
+	public void write(String outputFile)
 	{
-		FileOutputStream fos = null;
-		PrintWriter pw = null;
-		
-		fos = new FileOutputStream(outputFile);
-		pw = new PrintWriter(fos);
-		
-		// Iterates through each string in the keySet of uniqueWords, appending each corresponding value to outputFile.
-		for (String key : wordCounter.keySet())
+		try
 		{
-			pw.println(wordCounter.get(key));
+			FileOutputStream fos = null;
+			PrintWriter pw = null;
+			
+			fos = new FileOutputStream(outputFile);
+			pw = new PrintWriter(fos);
+			
+			// Iterates through each string in the keySet of uniqueWords, appending each corresponding value to outputFile.
+			for (String key : wordCounter.keySet())
+			{
+				pw.println(wordCounter.get(key));
+			}
+			
+			// Close the writers and input stream
+			pw.flush();
+			fos.close();
 		}
-		
-		// Close the writers and input stream
-		pw.flush();
-		fos.close();
+		catch (IOException ex)
+		{
+			ex.printStackTrace();
+		}
 	}
 }
