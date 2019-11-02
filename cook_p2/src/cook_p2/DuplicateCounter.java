@@ -63,7 +63,7 @@ public class DuplicateCounter {
 			// Iterates through each string in the keySet of uniqueWords, appending each corresponding value to outputFile.
 			for (String key : wordCounter.keySet())
 			{
-				pw.println(wordCounter.get(key));
+				pw.println(key + ": " + wordCounter.get(key));
 			}
 			
 			// Close the writers and input stream
