@@ -7,7 +7,7 @@ public class Application {
 	public static void main(String[] args) throws IOException
 	{
 		String dataFile = "problem2.txt";
-		String outputFile = "unique_words_count.txt";
+		String outputFile = "unique_words_counts.txt";
 		
 		// Creates a DuplicateRemover object.
 		DuplicateCounter dc = new DuplicateCounter();
